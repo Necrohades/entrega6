@@ -8,6 +8,8 @@ author:
 date: "2023-12-04"
 output: html_document
 ---
+Repositorio GitHub: https://github.com/Necrohades/entrega6.
+
 Primero de todo, cargamos las librerías necesarias para realizar el escalamiento multidemensional de nuestro ejercicio.
 
 ```{r, warning = FALSE, message = FALSE}
