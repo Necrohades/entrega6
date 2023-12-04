@@ -5,12 +5,11 @@ author:
         - Frank William Hammond Espinosa
         - Toni Fuentes Bauzà
 
-date: "2023-12-03"
+date: "2023-12-04"
 output: html_document
 ---
 
-Vamos a representar gráficamente las similitudes
-
+Vamos a representar gráficamente las similitudes.
 
 Primero de todo, cargamos las librerías necesarias para realizar el escalamiento multidemensional de nuestro ejercicio.
 
@@ -20,16 +19,17 @@ library(tidyverse)
 library(ggplot2)
 ```
 
-
-Leemos ahora las matrices de similitudes y las convertimos en distancias.
+Leemos ahora las matrices de similitud creadas por los diferentes kernels y las transformamos en matrices de distancias.
 
 ```{r}
 read.table("fileListANIMAL_phylum.txt") ->phylum
 read.table("ANIMALS-matrixPM.txt")-> PM
-sqrt(2* (1-PM)) -> PM
 read.table("ANIMALS-matrixSP.txt")-> SP
-sqrt(2* (1-SP)) -> SP
 read.table("ANIMALS-matrixVH.txt")-> VH
+
+# Transformamos las matrices.
+sqrt(2* (1-PM)) -> PM
+sqrt(2* (1-SP)) -> SP
 sqrt(2* (1-VH)) -> VH
 ```
 
@@ -39,14 +39,16 @@ A continuación, leemos la clasificación \textit{phylum} de los animales.
 Phylum = phylum[,2] %>%  as.factor
 ```
 
-Representemos finalmente las gráficas deseadas.
+Representemos las gráficas deseadas.
 
 ```{r}
 PM_cmd <- cmdscale(PM,k=2) %>% as.data.frame
 
 PM_cmd %>% ggplot(aes(x = V1, y = V2, color = Phylum)) +
   geom_point() +
-  ggtitle("PM kernel")
+  ggtitle("Kernel PM")+
+  labs(x="Coordenada principal 1", y="Coordenada principal 2")+
+  theme_minimal()
 ```
 
 ```{r}
@@ -54,7 +56,9 @@ SP_cmd <- cmdscale(SP,k=2) %>% as.data.frame
 
 SP_cmd %>% ggplot(aes(x = V1, y = V2, color = Phylum)) +
   geom_point() +
-  ggtitle("SP kernel")
+  ggtitle("Kernel SP")+
+  labs(x="Coordenada principal 1",y="Coordenada principal 2")+
+  theme_minimal()
 ```
 
 ```{r}
@@ -62,7 +66,9 @@ VH_cmd <- cmdscale(VH,k=2) %>% as.data.frame
 
 VH_cmd %>% ggplot(aes(x = V1, y = V2, color = Phylum)) +
   geom_point() +
-  ggtitle("VH kernel")
+  ggtitle("Kernel VH")+
+  labs(x="Coordenada principal 1", y="Coordenada principal 2")+
+  theme_minimal()
 ```
 
 
